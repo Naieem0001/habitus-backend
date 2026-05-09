@@ -18,6 +18,9 @@ coverage/
 # TypeScript
 *.tsbuildinfo
 
+# Environment variables
+.env
+
 # Environment variables and secrets
 .env
 .env.*
