@@ -15,6 +15,7 @@ const PORT = process.env.PORT || 3000;
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:8080',
+  'https://tanstack-start-app.habitus-01.workers.dev',
   process.env.FRONTEND_URL || 'https://habit-us-five.vercel.app'
 ];
 
