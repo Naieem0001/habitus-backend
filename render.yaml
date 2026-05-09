@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: habitus-backend
+    env: node
+    region: singapore
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SEED_SECRET
+        sync: false
