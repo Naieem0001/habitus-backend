@@ -12,8 +12,18 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // CORS configuration to allow frontend to communicate with backend
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:8080',
+  process.env.FRONTEND_URL || 'https://habit-us-five.vercel.app'
+];
+
 const corsOptions = {
-  origin: ['http://localhost:5173', 'http://localhost:8080', 'https://your-app.netlify.app'],
+  origin: (origin: any, callback: any) => {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    return callback(new Error('CORS policy: origin not allowed'), false);
+  },
   optionsSuccessStatus: 200
 };
 
