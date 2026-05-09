@@ -162,4 +162,31 @@ router.get('/leaderboard', async (req, res) => {
   }
 });
 
+// Search users by display name or email
+router.get('/search', async (req, res) => {
+  try {
+    const query = String(req.query.q || '').trim();
+
+    if (!query) {
+      return res.status(400).json({ error: 'Search query is required' });
+    }
+
+    const searchPattern = `%${query}%`;
+    const { data, error } = await supabaseAdmin
+      .from('users')
+      .select('id, display_name, avatar_url, xp, level, streak_days, tasks_completed')
+      .or(`display_name.ilike.${searchPattern},email.ilike.${searchPattern}`)
+      .limit(20);
+
+    if (error) {
+      throw error;
+    }
+
+    res.json(data);
+  } catch (error) {
+    console.error('Error searching users:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 export default router;

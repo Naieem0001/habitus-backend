@@ -9,13 +9,17 @@ import taskRoutes from './routes/tasks';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8081;
 
 // CORS configuration to allow frontend to communicate with backend
+const frontendOrigins = process.env.FRONTEND_URL
+  ? process.env.FRONTEND_URL.split(',').map((url) => url.trim()).filter(Boolean)
+  : ['http://localhost:5173'];
+
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:8080',
-  process.env.FRONTEND_URL || 'https://habit-us-five.vercel.app'
+  ...frontendOrigins
 ];
 
 const corsOptions = {
